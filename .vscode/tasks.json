@@ -1,0 +1,15 @@
+{
+    "version": "0.1.0",
+    "command": "sh",
+    "args": ["build.sh"],
+    "isShellCommand": true,
+    "showOutput": "always",
+    "suppressTaskName": false,
+    "tasks": [
+        {
+            "taskName": "build",
+            "suppressTaskName": true,
+            "problemMatcher": ["$tsc", "$msCompile"]
+        }
+    ]
+}

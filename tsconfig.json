@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "outDir": "./wwwroot/ts",
+        "noEmitOnError": false,
+        "sourceMap": true,
+        "inlineSources": true,
+        "module": "amd"
+    },
+    "exclude": [
+        "node_modules",
+        "wwwroot"
+    ]
+}
