@@ -1,16 +1,13 @@
-/// <reference path="../lib/knockout/dist/knockout.debug.js" />
-/// <reference path="../lib/knockroute/dist/knockroute.js" />
-
 define(['knockout','knockroute', 'crypto'], function(ko, kr, crypto) {
     'use strict';
     
-    function PasswordEditModel(router) {
+    return function PasswordEditModel(router) {
 
         this.load = function(routeValues){
             if (routeValues.id) {
                 return $.ajax({
                     method: "get",
-                    url: "/Password/GetVault/" + routeValues.id,
+                    url: "/Password/GetPassword/" + routeValues.id,
                     dataType: "json"
                 }).then(function(response){
                     this.vaultID = response.vaultID;
@@ -21,16 +18,14 @@ define(['knockout','knockroute', 'crypto'], function(ko, kr, crypto) {
             }
         }
 
-        this.save = function(){
-            if (this.vaultID === 0) {
-                var masterKey = createMasterKey(this.password());
-                
+        this.save = function() {
+            if (this.passwordID === 0) {
                 $.ajax({
                     method: "post",
-                    url: "/Password/AddVault",
+                    url: "/Password/SetPassword/" + this.passwordID,
                     data: {
                         name: this.name(),
-                        masterKey: masterKey
+                        description: this.description()
                     }
                 }).then(function(response){
                     router.navigate({ view: "Home" });
@@ -38,10 +33,10 @@ define(['knockout','knockroute', 'crypto'], function(ko, kr, crypto) {
             }
         };
 
-        this.vaultID = 0;
+        this.passwordID = 0;
         this.name = ko.observable();
-        this.password = ko.observable();
+        this.description = ko.observable();
+        this.plainData = ko.observable();
     }
 
-    return PasswordEditModel;
 });

@@ -1,6 +1,3 @@
-/// <reference path="../lib/knockout/dist/knockout.debug.js" />
-/// <reference path="../lib/knockroute/dist/knockroute.js" />
-
 define(['knockout', 'knockroute', 'crypto'], function(ko, kr, crypto) {
     'use strict';
 

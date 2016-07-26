@@ -1,7 +1,4 @@
-/// <reference path="../lib/knockout/dist/knockout.debug.js" />
-/// <reference path="../lib/knockroute/dist/knockroute.js" />
-
-define(['knockout','knockroute', 'asmcrypto'], function(ko, kr, asmcrypto) {
+define(['knockout','knockroute', 'crypto'], function(ko, kr, crypto) {
     'use strict';
     
     function VaultEditModel(router) {
