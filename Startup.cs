@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using WebApplication.Data;
 
 namespace WebApplication
 {
@@ -37,8 +38,8 @@ namespace WebApplication
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            // services.AddDbContext<ApplicationDbContext>(options =>
-            //     options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<AppDbContext>(options =>
+                 options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 
             // services.AddIdentity<ApplicationUser, IdentityRole>()
             //     .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -64,6 +65,7 @@ namespace WebApplication
                 app.UseBrowserLink();
             }
 
+            app.UseDefaultFiles();
             app.UseStaticFiles();
 
             // Add external authentication middleware below. To configure them please see https://go.microsoft.com/fwlink/?LinkID=532715

@@ -1,6 +1,5 @@
 /// <reference path="../lib/knockout/dist/knockout.debug.js" />
 /// <reference path="../lib/knockroute/dist/knockroute.js" />
-/// <reference path="knockroute.js" />
 
 define(['knockout','knockroute'], function(ko, kr) {
     'use strict';
@@ -8,11 +7,18 @@ define(['knockout','knockroute'], function(ko, kr) {
     function HomeModel() {
 
         this.load = function(){
-            return true;
+            return $.ajax({
+                method: "get",
+                url: "/Password/ListVaults",
+                dataType: "json"
+            }).then(function(response){
+                this.vaults(response);
+            }.bind(this), function(err){
+                console.error(err);                
+            });
         }
 
-        this.title = ko.observable("Hello World!");
-        
+        this.vaults = ko.observableArray();        
     }
 
     return HomeModel;

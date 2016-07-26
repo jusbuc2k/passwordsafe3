@@ -1,6 +1,6 @@
-require(["knockout","App"], function(ko, App){
+require(["knockout","AppHost"], function(ko, AppHost){
     
-    var app = new App();
+    var app = new AppHost();
 
     ko.applyBindings(app);
 

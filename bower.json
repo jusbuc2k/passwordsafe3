@@ -7,6 +7,9 @@
     "jquery-validation": "1.15.0",
     "jquery-validation-unobtrusive": "3.2.6",
     "knockout": "latest",
-    "knockroute": "latest"
+    "knockroute": "latest",
+    "requirejs": "latest",
+    "asmcrypto": "latest",
+    "text-encoding": "latest"
   }
 }

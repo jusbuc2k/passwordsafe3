@@ -18,11 +18,6 @@ var paths = {
     concatCssDest: webroot + "css/site.min.css"
 };
 
-gulp.task("copy", function(){
-   return gulp.src(paths.static)
-    .pipe(gulp.dest(webroot + "dist/")); 
-});
-
 gulp.task("clean:js", function (cb) {
     rimraf(paths.concatJsDest, cb);
 });

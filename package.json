@@ -12,7 +12,5 @@
     "bower": "^1.7.9"
   },
   "dependencies": {
-    "knockout": "^3.4.0",
-    "requirejs": "^2.2.0"
   }
 }
