@@ -8,11 +8,12 @@ using WebApplication.Data;
 
 namespace WebApplication.Controllers
 {
-    public class CreateVaultModel
+    public class CreatePasswordModel
     {
         public string Name { get;set; }
 
-        public string Password { get;set; }
+        public string Description { get; set; }
 
+        public string Data { get;set; }
     }
 }

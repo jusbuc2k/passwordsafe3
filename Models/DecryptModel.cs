@@ -8,11 +8,9 @@ using WebApplication.Data;
 
 namespace WebApplication.Controllers
 {
-    public class CreateVaultModel
+    public class DecryptPasswordModel
     {
-        public string Name { get;set; }
-
-        public string Password { get;set; }
+        public string UnlockPassword { get;set; }
 
     }
 }

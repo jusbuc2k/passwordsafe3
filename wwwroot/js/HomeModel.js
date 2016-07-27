@@ -1,19 +1,13 @@
-define(['knockout','knockroute'], function(ko, kr) {
+define(['knockout','knockroute', 'http'], function(ko, kr, http) {
     'use strict';
     
     function HomeModel() {
 
         this.load = function(){
-            return $.ajax({
-                method: "get",
-                url: "/Password/ListVaults",
-                dataType: "json"
-            }).then(function(response){
+            return http.get("/Password/ListVaults").then(function(response){
                 this.vaults(response);
-            }.bind(this), function(err){
-                console.error(err);                
-            });
-        }
+            }.bind(this));
+	    }
 
         this.vaults = ko.observableArray();        
     }

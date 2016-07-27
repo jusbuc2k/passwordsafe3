@@ -1,17 +1,17 @@
-<h1>Passwords</h1>
+<template>
 
-<table class="table">
-    <tbody data-bind="foreach: passwords">
-        <tr>
-            <td>
-                <a href="" data-bind="">
-                    <span data-bind="text: name"></span>
-                </a>
-            </td>
-        </tr>
-    </tbody>
-</table>
+    <h1>Passwords</h1>
 
-<p>
-    <a href="/#/AddPassword" class="btn btn-default">Add Password</a> 
-</p>
+    <h1 data-bind="text: title"></h1>
+
+    <form>
+        <div class="form-group">
+            <label>Unlock Password:</label>
+            <input type="password" data-bind="value: unlockPassword" class="form-control"/>
+        </div>
+        <p>
+            <button data-bind="unlockClicked">Unlock</button>
+        </p>
+    </form>
+
+</template>

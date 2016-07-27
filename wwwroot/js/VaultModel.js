@@ -1,50 +1,67 @@
-define(['knockout', 'knockroute', 'crypto'], function(ko, kr, crypto) {
+define(['knockout', 'knockroute', 'http'], function(ko, kr, http) {
     'use strict';
 
-    function passwordMap(password){
-        return {
-            name: password.name,
-            description: password.description,
-            data: password.data,
-            plainData: ko.observable()
-        }
-    }
-    
-    return function VaultModel() {
-        var encryptedMasterKey;
+    function PasswordViewModel(router){
+        this.name = ko.observable();
+        this.description = ko.observable();
+        this.data = ko.observable();
 
-        function decrypt(data, unlockPassword) {
-            var salt = crypto.extractIV(password.data);
-            var userKey = crypto.keyFromPassword(password, salt);
-            var masterKey = crypto.decrypt(userKey, encryptedMasterKey);
-            var plainBytes = crypto.decrypt(masterKey, data);
-            var plainText = new TextDecoder("utf-8").decode(plainBytes);
-
-            return plainText;
-            //TODO: JSON.parse
-        }
-
-        this.decrypt = function(password){
-            password.plainData(decrypt(password.data, prompt("Unlock Password")));
+        this.load = function(routeValues){
+            this.name(routeValues.name);
+            this.description(routeValues.description);
+            this.data(routeValues.data);
         };
+    }
 
-        this.load = function(routeValues) {
-            return $.ajax({
-                method: "get",
-                url: "/Password/ListPasswords/" + routeValues.id,
-                dataType: "json"
-            }).then(function(response){
-                this.title(response.vault.name);
-                this.passwords(response.passwords);
-                encryptedMasterKey = response.masterKey;
-            }.bind(this), function(err){
-                console.error(err);                
+    function PasswordListModel(router){
+        this.passwords = ko.observableArray();
+
+        this.passwordClicked = function(password){
+            http.post("/Password/Decrypt/" + password.passwordID).then(function(response){
+                router.setView({
+                    name: 'PasswordView',
+                    model: PasswordViewModel,
+                    templateID: 'password_view',
+                    templateSrc: '/templates/PasswordView.html' 
+                }, response);
             });
-        }
+        }.bind(this);
 
+        this.load = function(routeValues){
+            this.passwords(routeValues);
+        };
+    }
+
+    return function VaultModel(router) {
+        this.vaultID = null;
         this.title = ko.observable();
         this.passwords = ko.observableArray();
-        this.selectedPassword = ko.observable();
+
+        this.unlockPassword = ko.observable();
+        this.isUnlocked = ko.observable(false);
+
+        this.unlockClicked = function(){
+            http.post('/Password/Unlock/' + this.vaultID, {
+                password: this.unlockPassword()
+            }).then(function(response) {
+                this.passwords(response);
+                this.isUnlocked(true);
+
+                router.setView({
+                    name: 'PasswordList',
+                    model: PasswordListModel,
+                    templateID: 'password_list',
+                    templateSrc: '/templates/PasswordList.html'
+                }, response);
+            }.bind(this), function(err){
+                alert('invalid password');
+            });
+        }.bind(this);
+
+        this.load = function(routeValues) {
+            this.vaultID = routeValues.id;
+            return true;
+        };
     }
 
 });
